@@ -85,6 +85,18 @@ METHODS
             @grey_colors = $rgb->names('gray'); # returns list of all the names
                                                 # matching the word 'gray'
 
+CREDITS
+    Following people contributed to this library with their patches and/or
+    bug reports. (list is in chronological order)
+
+    *   Marc-Olivier BERNARD <mob@kilargo.fr> notified of the warnings that
+        the library produced while "warnings" pragma enabled and improper
+        parsed rgb values that contain single "0". This bug was fixed in 1.2
+
+    *   "Herrmann Martin (FV/FLI) *" <Martin.Herrmann@de.bosch.com> noticed
+        a bug in rgb2hex() method which was failing if the blue value was a
+        single "0". This problem is fixed in 1.3
+
 AUTHOR
     Sherzod B. Ruzmetov <sherzodr@cpan.org>
 

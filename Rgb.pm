@@ -1,5 +1,7 @@
 package Color::Rgb;
 
+# $Id: Rgb.pm,v 1.3 2002/07/02 14:09:47 sherzodr Exp $
+
 require 5.003;
 use strict;
 use Carp;
@@ -19,7 +21,8 @@ use vars qw($RGB_TXT $VERSION);
 ###########################################################################
 
 $RGB_TXT = '/usr/X11R6/lib/X11/rgb.txt';
-$VERSION = '1.2';
+
+($VERSION) = '$Revision: 1.3 $' =~ m/Revision:\s*(\S+)/;
 
 
 
@@ -137,7 +140,7 @@ sub hex2rgb {
 sub rgb2hex {
     my ($self, $r, $g, $b, $pound) = @_;
 
-    unless ( $b ) {
+    unless ( defined $b ) {
         croak "Color::Rgb->rgb2hex(): Usage: rgb2hex(\$red, \$green, \$blue [,\$prefix]";
     }
 
@@ -274,6 +277,29 @@ matching the pattern. Example:
                                         # matching the word 'gray'
 
 =back
+
+
+=head1 CREDITS
+
+Following people contributed to this library with their patches and/or
+bug reports. (list is in chronological order)
+
+=over 4
+
+=item *
+
+Marc-Olivier BERNARD <mob@kilargo.fr> notified of the warnings that the library
+produced while "warnings" pragma enabled and improper parsed rgb values
+that contain single "0". This bug was fixed in 1.2
+
+=item *
+
+"Herrmann Martin (FV/FLI) *" <Martin.Herrmann@de.bosch.com> noticed
+a bug in rgb2hex() method which was failing if the blue value was a single "0".
+This problem is fixed in 1.3
+
+=back
+
 
 =head1 AUTHOR
 
