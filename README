@@ -1,35 +1,93 @@
-Color/Rgb version 0.01
-======================
+NAME
+    Color::Rgb - Simple rgb.txt parsing class
 
-The README is used to introduce the module and provide instructions on
-how to install the module, any machine dependencies it may have (for
-example C compilers and installed libraries) and any other information
-that should be provided before the module is installed.
+SYNOPSIS
+        use Color::Rgb;
+        $rgb = new Color::Rgb(rgb_txt=>'/usr/X11R6/lib/X11/rgb.txt');
 
-A README file is required for CPAN modules since CPAN extracts the
-README file from a module distribution so that people browsing the
-archive can use it get an idea of the modules uses. It is usually a
-good idea to provide version information here so that people can
-decide whether fixes for the module are worth downloading.
+        @rgb = $rgb->rgb('red');            # returns 255, 0, 0
+        $red = $rgb->rgb('red', ',');       # returns the above rgb list as
+                                            # comma separated string
+        $red_hex=$rgb->hex('red');          # returns 'FF0000'
+        $red_hex=$rgb->hex('red', '#');     # returns '#FF0000'
 
-INSTALLATION
+        $my_hex = $rgb->rgb2hex(255,0,0);   # returns 'FF0000'
+        $my_rgb = $rgb->hex2rgb('#FF0000'); # returns list of 255,0,0
 
-To install this module type the following:
+DESCRIPTION
+    Color::Rgb - simple rgb.txt parsing class. It will also help you to
+    convert rgb color values to hex and vice-versa.
 
-   perl Makefile.PL
-   make
-   make test
-   make install
+METHODS
+    *   "new([rgb_txt="$rgb_file])> - constructor method. Returns a
+        Color::Rgb object. Optionally accepts a path to the rgb.txt file. If
+        you ommit the file, it will use the path in the $Color::Rgb::RGB_TXT
+        variable, which defaults to "'/usr/X11R6/lib/X11/rgb.txt'". It
+        means, instead of using rgb_txt=>'' option, you could also set the
+        value of the $Color::Rgb::RGB_TXT variable to the correct path
+        before you call the the new() entry elsewhere in this document
+        constructor (but definitely after you load the Color::Rgb class with
+        "use" or "require").
 
-DEPENDENCIES
+        Note: If your system does not provide with any rgb.txt file,
+        Color::Rgb distribution includes an rgb.txt file that you can use
+        instead.
 
-This module requires these other modules and libraries:
+    *   "rgb($alias [,$delimiter])" - returns list of numeric Red, Green and
+        Blue values for an $alias delimited (optionally) by a $delimiter .
+        Alias is name of the color in the English language (Ex., 'black',
+        'red', 'purple' etc.).
 
-  blah blah blah
+        Examples:
 
-COPYRIGHT AND LICENCE
+            my ($r, $g, $b) = $rgb->rgb('blue');      # returns list: 00, 00, 255
+            my $string      = $rgb->rgb('blue', ','); # returns string: '00,00,255'
 
-Put the correct copyright and licence information here.
+        If alias does not exist in the rgb.txt file it will return undef.
 
-Copyright (C) 2002 A. U. Thor blah blah blah
+    *   "hex($alias [,$prefix])" - similar to the rgb($alias) manpage
+        method, but returns hexedecimal string representing red, green and
+        blue colors, prefixed (optionally) with $prefix. If $alias does not
+        exist in the rgb.txt file it will return undef
+
+    *   "rgb2hex($r, $g, $b [,$prefix])" - converts rgb value to hexidecimal
+        string. This method has nothing to do with the rgb.txt file, so none
+        of the arguments need to exist in the rgb.txt.
+
+        Examples,
+
+            @rgb = (128, 128, 128);               # RGB represantation of grey
+            $hex_grey = $rgb->rgb2hex(@rgb);      # returns string 'C0C0C0'
+            $hex_grey = $rgb->rgb2hex(@rgb, '#'); # returns string '#C0C0C0'
+
+    *   "hex2rgb('hex' [,$delim])" - It's the opposite of the rgb2hex()
+        entry elsewhere in this document: takes a hexidecimal represantation
+        of a color and returns a numeric list of Red, Green and Blue. If
+        optional $delim delimiter is present, it returns the string of RGB
+        colors delimited by the $delimiter. Characters like '#' and 'Ox' in
+        the begining of the hexidecimal value will be ignored. Examples:
+
+            $hex = '#00FF00';   # represents blue
+
+            @rgb = $rgb->hex2rgb($hex);            #returns list of 0, 255, 0
+            $rgb_string = $rgb->hex2rgb($hex,','); #returns string '0,255,0'
+
+        Note: the hex2rgb() entry elsewhere in this document expects valid
+        hexidecimal represantation of a color in 6 character long string. If
+        not, it might not work properly.
+
+    *   "names([$pattern]" - returns a list of all the aliases in the
+        rgb.txt file. If $pattern is givven as the first argument, it will
+        return only the names matching the pattern. Example:
+
+            @grey_colors = $rgb->names;         # returns all the names
+
+            @grey_colors = $rgb->names('gray'); # returns list of all the names
+                                                # matching the word 'gray'
+
+AUTHOR
+    Sherzod B. Ruzmetov <sherzodr@cpan.org>
+
+SEE ALSO
+    the Color::Object manpage
 

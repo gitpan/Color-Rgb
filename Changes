@@ -1,22 +1,32 @@
-Revision history for Perl extension Color::Rgb.
-
-0.01  Tue Apr  2 13:38:42 2002
-	- original version; created by h2xs 1.21 with options
-		-A -X Color::Rgb
-
 
 RCS file: /home/sherzodr/CVS/modules/Color-Rgb/Rgb.pm,v
 Working file: Rgb.pm
-head: 1.1
-branch: 1.1.1
+head: 1.2
+branch:
 locks: strict
 access list:
 symbolic names:
 	start: 1.1.1.1
 	UltraCgis: 1.1.1
 keyword substitution: kv
-total revisions: 2;	selected revisions: 2
+total revisions: 3;	selected revisions: 3
 description:
+----------------------------
+revision 1.2
+date: 2002/05/31 03:52:35;  author: sherzodr;  state: Exp;  lines: +130 -65
+hex() method returned undef if the first value returned
+from rgb() was 0. Thanks to Marc-Olivier Bernard <mob@kilargo.fr>
+for noticing it.
+
+Warnings issued by names() is fixed
+(again thanks to Marc-Olivier Bernard mob@kilargo.fr )
+
+
+hex2rgb() also was issueing warnings, and replacing built-in
+hex() with CORE::hex() solve the problem, sine the library itself
+has its own hex() method
+
+Some touches to the manual...
 ----------------------------
 revision 1.1
 date: 2002/04/03 09:28:18;  author: sherzodr;  state: Exp;
